@@ -74,7 +74,7 @@ function registerGeoLocatedTwitterers(data){
             tweet['latitude'] = data[i].latitude;
             tweet['longitude'] = data[i].longitude;
             tweet['label'] = data[i].user;
-            tweet['contents'] = '<div><div style="float:left"><img src="https://api.twitter.com/1/users/profile_image?screen_name=' + data[i].user + '&size=normal" /></div><div>'+ data[i].text + "</div>" ;
+            tweet['contents'] = '<div><div style="float:left"><img src="https://api.twitter.com/1/users/profile_image?screen_name=' + data[i].user + '&size=normal" width="48" height="48" /></div><div>'+ data[i].text + "</div>" ;
             user_contents.push(tweet);
         }
     }
@@ -117,8 +117,8 @@ function updateTweets(){
 }
 
 updateTweets();
-setTimeout("message()", 5000);
+setTimeout("message()", 15000);
 function message() {
     updateTweets();
-    setTimeout("message()", 5000);
+    setTimeout("message()", 15000);
 }
