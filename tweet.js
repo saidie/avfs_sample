@@ -136,17 +136,24 @@ function loadAnywhere(){
 }
 
 function putTweetBox(id){
-    if(twttr == undefined ||
-       geo_latitude == undefined || geo_longitude == undefined) return false;
+    if(twttr == undefined || geo_retrieving) return false;
+
+    if(geo_latitude == null || geo_longitude == null){
+        var option = {};
+    }
+    else{
+        var option = {
+            lat: geo_latitude,
+            long: geo_longitude,
+        };
+    }
+
     twttr.anywhere(function(T){
         T(id).tweetBox({
             defaultContent: asfc_hash_tag,
             width: 300, //px
             height: 64, //px
-            data: {
-                lat: geo_latitude,
-                long: geo_longitude,
-            },
+            data: option,
         });
     });
     return true;
