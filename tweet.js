@@ -1,4 +1,4 @@
-var asfc_hash_tag = '%23spaceapps_tokyo';
+var asfc_hash_tag = 'pic'; //%23avfs
 var tweet_last_id = null;
 var tweet_rpp = 50;
 var cached_tweets = [];
@@ -31,11 +31,12 @@ function getResult(json){
         tmp_array['text'] = data[i].text
         tmp_array['created_at'] = data[i].created_at;
         if(data[i].geo == null){
-            tmp_array['latitude'] = tmp_array['longtitude'] = null;
+            tmp_array['latitude'] = tmp_array['longitude'] = null;
         }
         else if(data[i].geo.type == "Point"){
             tmp_array['latitude'] = data[i].geo.coordinates[0];
-            tmp_array['longtitude'] = data[i].geo.coordinates[1];
+            tmp_array['longitude'] = data[i].geo.coordinates[1];
+            //console.log(data[i].geo.coordinates[0]+" "+data[i].geo.coordinates[1])
         }
         else{
             console.log('unsupported geo type');
@@ -56,7 +57,7 @@ function tweet2string(tweet){
     var text = tweet.text;
     text = text.replace(/(https?:\/\/[0-9a-zA-Z\.\/\-_\?\&\=]*)/g, '<a href=$1 target="_blank">$1</a>');
     var cls = '';
-    if(tweet.longtitude != null && tweet.latitude != null){
+    if(tweet.longitude != null && tweet.latitude != null){
         var style = "border-bottom: 1px solid black; background-color: #CCFFCC;";
     }
     else{
@@ -68,16 +69,16 @@ function tweet2string(tweet){
 function registerGeoLocatedTwitterers(data){
     var user_contents = [];
     for(var i = 0; i < data.length; ++i){
-        if(data[i].longtitude != null && data[i].latitude != null){
+        if(data[i].longitude != null && data[i].latitude != null){
             var tweet = [];
             tweet['latitude'] = data[i].latitude;
-            tweet['longtitude'] = data[i].longtitude;
+            tweet['longitude'] = data[i].longitude;
             tweet['label'] = data[i].user;
-            tweet['contents'] = '<img src="https://api.twitter.com/1/users/profile_image?screen_name=' + data[i].user + '&size=mini" />';
+            tweet['contents'] = '<div><div style="float:left"><img src="https://api.twitter.com/1/users/profile_image?screen_name=' + data[i].user + '&size=normal" /></div><div>'+ data[i].text + "</div>" ;
             user_contents.push(tweet);
         }
     }
-    AVfS.LoadContentsData(AVfS.ContentsMesh, user_contents);
+    AVfS.LoadContentsData(user_contents);
 }
 
 function twitterSearchCallback(json){
