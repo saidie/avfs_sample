@@ -122,3 +122,39 @@ function message() {
     updateTweets();
     setTimeout("message()", 5000);
 }
+
+
+
+//
+// Anywhere
+//
+
+var anywhere_consumer_key = 'Se5RrzHkq5IzKjmZviVw';
+
+function loadAnywhere(){
+    addScript('http://platform.twitter.com/anywhere.js?id=' + anywhere_consumer_key + '&v=1', null);
+}
+
+function putTweetBox(id){
+    if(twttr == undefined ||
+       geo_latitude == undefined || geo_longitude == undefined) return false;
+    twttr.anywhere(function(T){
+        T(id).tweetBox({
+            defaultContent: asfc_hash_tag,
+            width: 300, //px
+            height: 64, //px
+            data: {
+                lat: geo_latitude,
+                long: geo_longitude,
+            },
+        });
+    });
+    return true;
+}
+
+loadAnywhere();
+setTimeout("tweetBoxPutter()", 1000);
+function tweetBoxPutter(){
+    if(!putTweetBox('#tweet_box'))
+        setTimeout("tweetBoxPutter()", 1000);
+}
