@@ -1,4 +1,4 @@
-var asfc_hash_tag = 'pic'; //%23avfs
+var avfs_hash_tag = 'avfs';
 var tweet_last_id = null;
 var tweet_rpp = 50;
 var cached_tweets = [];
@@ -109,7 +109,7 @@ function twitterSearchCallback(json){
 
 function updateTweets(){
     console.log('update');
-    var query = asfc_hash_tag;
+    var query = "%23" + avfs_hash_tag;
     url = 'http://search.twitter.com/search.json?q=' + query + '&callback=twitterSearchCallback&rpp=' + tweet_rpp + '&include_entities=true&result_type=recent';
     if(tweet_last_id != null)
         url += '&since_id=' + tweet_last_id;
@@ -129,7 +129,7 @@ function message() {
 // Anywhere
 //
 
-var anywhere_consumer_key = 'Se5RrzHkq5IzKjmZviVw';
+var anywhere_consumer_key = 'ICWt9PHCuWM9fs5TV6P4lQ';
 
 function loadAnywhere(){
     addScript('http://platform.twitter.com/anywhere.js?id=' + anywhere_consumer_key + '&v=1', null);
@@ -138,19 +138,19 @@ function loadAnywhere(){
 function putTweetBox(id){
     if(twttr == undefined || geo_retrieving) return false;
 
-    if(geo_latitude == null || geo_longitude == null){
+    if(typeof AVfS.latitude === "undefined" || typeof AVfS.longitude === "undefined"){
         var option = {};
     }
     else{
         var option = {
-            lat: geo_latitude,
-            long: geo_longitude,
+            lat: AVfS.latitude,
+            long: AVfS.longitude,
         };
     }
 
     twttr.anywhere(function(T){
         T(id).tweetBox({
-            defaultContent: asfc_hash_tag,
+            defaultContent: "#" + avfs_hash_tag,
             width: 300, //px
             height: 64, //px
             data: option,
