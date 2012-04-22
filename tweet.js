@@ -102,6 +102,7 @@ function twitterSearchCallback(json){
         str[i] = tweet2string(cached_tweets[i]);
     }
     div.innerHTML = str.join("\n");
+    div.scrollTop = div.scrollHeight;
 
     console.log('updated: new ' + res.length + ' tweets');
     console.log(tweet_last_id);
